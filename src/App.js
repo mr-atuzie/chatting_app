@@ -1,5 +1,12 @@
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+
 function App() {
-  return <div>Here i am again</div>;
+  return (
+    <div>
+      <Register />
+    </div>
+  );
 }
 
 export default App;
