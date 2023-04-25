@@ -1,6 +1,27 @@
-import React from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 
 const Login = () => {
+  const [err, setErr] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/");
+    } catch (error) {
+      setErr(true);
+    }
+  };
+
   return (
     <div className=" flex">
       {/* text div */}
@@ -11,26 +32,19 @@ const Login = () => {
           <div className=" bg-red-200 p-4 w-[65%]">
             <h1>login</h1>
 
-            <form>
-              <div>
-                <input type="text" placeholder="display name" />
-              </div>
-
+            <form onSubmit={handleSubmit}>
               <div>
                 <input type="email" placeholder="email" />
               </div>
               <div>
                 <input type="password" placeholder="password" />
               </div>
-              <div>
-                <input className="hidden" type="file" id="file" />
-                <label htmlFor="file">select profile picture</label>
-              </div>
+
               <button>sign up</button>
             </form>
 
             <p>
-              Dont have an account ? <span>Register</span>
+              Dont have an account ? <Link to={"/register"}>Register</Link>
             </p>
           </div>
         </div>

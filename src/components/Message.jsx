@@ -1,49 +1,76 @@
-import React from "react";
+import React, { useContext, useEffect, useRef } from "react";
+import { ChatContext } from "../context/ChatContext";
+import { AuthContext } from "../context/AuthContext";
 
-const Message = ({ owner }) => {
+const Message = ({ message }) => {
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
+
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+
   return (
     <div
+      ref={ref}
       className={
-        owner ? " flex mb-4 gap-3  flex-row-reverse" : "flex mb-4 gap-3"
+        message.senderId === currentUser.uid
+          ? " flex mb-4 gap-3  flex-row-reverse"
+          : "flex mb-4 gap-3"
       }
     >
-      <div className={owner ? "flex gap-3 flex-row-reverse" : "flex gap-3"}>
+      <div
+        className={
+          message.senderId === currentUser.uid
+            ? "flex gap-3 flex-row-reverse"
+            : "flex gap-3"
+        }
+      >
         <img
-          className=" w-[25px] h-[25px] rounded-full"
-          src="https://images.squarespace-cdn.com/content/v1/530a77dee4b035db71736c02/1570812709805-UW9CYAKYVXKSTO845HHI/Connecticut+headshots+-+lawyer+headshot+-+Seshu+Badrinath.jpg?format=1000w"
+          className=" w-[40px] h-[40px] object-cover rounded-full"
+          src={
+            message.senderId === currentUser.uid
+              ? currentUser.photoURL
+              : data.user.photoURL
+          }
           alt=""
         />
 
         <div>
-          <div
-            className={
-              owner
-                ? "bg-pink-700  text-white max-w-lg shadow-lg p-3 rounded-lg"
-                : "bg-white rounded-lg p-3 text-gray-700 max-w-lg shadow-lg"
-            }
-          >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
-            obcaecati nostrum sed temporibus deleniti ea.
+          {message.text && (
             <div
               className={
-                owner
-                  ? " flex gap-2 items-center justify-end text-white text-xs mt-4 text-right"
-                  : " flex gap-2 items-center justify-start text-xs text-gray-500 mt-4 text-right"
+                message.senderId === currentUser.uid
+                  ? "bg-pink-700  text-white w-[350px] shadow-lg p-3 rounded-lg"
+                  : "bg-white rounded-lg p-3 text-gray-700  w-[350px] shadow-lg"
               }
             >
-              Just now
+              {message.text}
+              <div
+                className={
+                  message.senderId === currentUser.uid
+                    ? " flex gap-2 items-center justify-end text-white text-xs mt-4 text-right"
+                    : " flex gap-2 items-center justify-start text-xs text-gray-500 mt-4 text-right"
+                }
+              >
+                Just now
+              </div>
             </div>
-          </div>
+          )}
 
-          <img
-            className={
-              owner
-                ? " rounded-lg w-[350px] object-cover my-2 float-right"
-                : "rounded-lg w-[350px] object-cover my-2"
-            }
-            src="https://www.themobileheadshot.com/wp-content/uploads/2022/09/TMH00193-1024x819.jpg"
-            alt=""
-          />
+          {message.img && (
+            <img
+              className={
+                message.senderId === currentUser.uid
+                  ? " rounded-lg w-[350px] object-cover my-2 float-right"
+                  : "rounded-lg w-[350px] object-cover my-2"
+              }
+              src={message.img}
+              alt=""
+            />
+          )}
         </div>
       </div>
     </div>

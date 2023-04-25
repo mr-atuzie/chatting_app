@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, storage, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [error, setError] = useState(false);
+  const [err, setErr] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,34 +21,31 @@ const Register = () => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      const storageRef = ref(storage, displayName);
+      const storageRef = ref(storage, `${displayName}/${file.name}`);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadBytes(storageRef, file).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then(async (url) => {
+          console.log(url);
 
-      uploadTask.on(
-        (error) => {
-          // Handle unsuccessful uploads
-          setError(true);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
-            });
-
-            await setDoc(doc(db, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
+          await updateProfile(res.user, {
+            displayName,
+            photoURL: url,
           });
-        }
-      );
+
+          await setDoc(doc(db, "users", res.user.uid), {
+            uid: res.user.uid,
+            displayName,
+            email,
+            photoURL: url,
+          });
+
+          await setDoc(doc(db, "userChats", res.user.uid), {});
+
+          navigate("/");
+        });
+      });
     } catch (error) {
-      setError(true);
-      console.log(error);
+      setErr(true);
     }
   };
   return (
@@ -77,7 +77,7 @@ const Register = () => {
             </form>
 
             <p>
-              You already have an account ? <span>Login</span>
+              You already have an account ? <Link to={"/login"}>login</Link>
             </p>
           </div>
         </div>

@@ -1,7 +1,36 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoIosPeople } from "react-icons/io";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
+import { AuthContext } from "../context/AuthContext";
+import { ChatContext } from "../context/ChatContext";
 
 const Chats = () => {
+  const [chats, setChats] = useState([]);
+
+  const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
+
+  const handleSelect = (u) => {
+    dispatch({ type: "CHANGE_USER", payload: u });
+  };
+
+  useEffect(() => {
+    const getChat = () => {
+      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+        setChats(doc.data());
+      });
+
+      return () => {
+        unsub();
+      };
+    };
+
+    currentUser.uid && getChat();
+  }, [currentUser.uid]);
+
+  console.log(Object.entries(chats));
+
   return (
     <div className=" ">
       <div className=" my-5 flex gap-4 items-center">
@@ -13,25 +42,40 @@ const Chats = () => {
           26
         </span>
       </div>
-      <div className=" border-b py-3">
-        <div className=" flex gap-3 items-center">
-          <img
-            className=" w-[50px] h-[50px] rounded-full object-cover"
-            src="https://images.squarespace-cdn.com/content/v1/530a77dee4b035db71736c02/1570812709805-UW9CYAKYVXKSTO845HHI/Connecticut+headshots+-+lawyer+headshot+-+Seshu+Badrinath.jpg?format=1000w"
-            alt=""
-          />
+      {Object.entries(chats)
+        ?.sort((a, b) => b[1].date - a[1].date)
+        .map((chat) => {
+          return (
+            <div
+              key={chat[0]}
+              className=" cursor-pointer border-b py-3"
+              onClick={() => handleSelect(chat[1].userinfo)}
+            >
+              <div className=" w-full flex gap-3 items-center">
+                <img
+                  className=" w-[50px] h-[50px] rounded-full object-cover"
+                  src={chat[1].userinfo.photoURL}
+                  alt=""
+                />
 
-          <div>
-            <div className=" flex items-center justify-between">
-              <h3 className=" font-medium capitalize">Rex Atuzie</h3>
-              <p className=" text-green-500 text-sm">5m</p>
+                <div className=" w-full">
+                  <div className=" flex justify-between items-center">
+                    <h3 className=" font-medium capitalize text-lg ">
+                      {chat[1].userinfo.displayName}
+                    </h3>
+
+                    <p className=" text-sm text-green-500">5m</p>
+                  </div>
+                  <p className="  w-full text-gray-600">
+                    {" "}
+                    {chat[1].lastMessage?.text}
+                  </p>
+                </div>
+              </div>
             </div>
-            <p className=" text-gray-600  text-sm">
-              I love you too, can't wait to come back to lagos
-            </p>
-          </div>
-        </div>
-      </div>
+          );
+        })}
+      {/* console.log(chat[1].userinfo.displayName); */}
     </div>
   );
 };

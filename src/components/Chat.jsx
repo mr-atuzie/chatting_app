@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import Messages from "./Messages";
 import Input from "./Input";
+import { ChatContext } from "../context/ChatContext";
 
 const Chat = () => {
+  const { data } = useContext(ChatContext);
+
+  console.log(data);
   return (
     <div className=" chat w-[55%] h-full bg-gray-300 ">
       {/* top bar */}
@@ -10,11 +14,13 @@ const Chat = () => {
         <div className=" flex items-center gap-3">
           <img
             className=" w-[70px] h-[70px] rounded-full object-cover"
-            src="https://media.gq.com/photos/63c8d5a6cd63aa9138b13c7b/1:1/w_3641,h_3641,c_limit/1246142881"
+            src={data.user?.photoURL}
             alt=""
           />
 
-          <h3 className=" font-medium text-lg capitalize">Rex Atuzie</h3>
+          <h3 className=" font-medium text-lg capitalize">
+            {data.user?.displayName}
+          </h3>
         </div>
       </div>
       {/* chat box */}
