@@ -27,7 +27,7 @@ const Messages = () => {
   console.log(messages);
 
   return (
-    <div className="  bg-transparent h-[70vh] px-4 overflow-y-scroll  scrollbar-thin scrollbar-thumb-pink-600 scrollbar-track-pink-50  ">
+    <div className="  bg-transparent px-2 h-[80vh] lg:h-[70vh] lg:px-4 overflow-y-scroll  scrollbar-thin scrollbar-thumb-pink-600 scrollbar-track-pink-50  ">
       {messages.map((message) => {
         return <Message message={message} key={message.id} />;
       })}

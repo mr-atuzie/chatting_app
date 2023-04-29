@@ -14,14 +14,26 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { ChatContext } from "../context/ChatContext";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
 
+  const navigate = useNavigate();
+
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+
+  const handleChat = (u) => {
+    dispatch({ type: "CHANGE_USER", payload: u });
+  };
+
+  const handleChat2 = (u) => {
+    dispatch({ type: "CHANGE_USER", payload: u });
+    navigate("/chats");
+  };
 
   const handleSearch = async () => {
     try {
@@ -44,7 +56,8 @@ const Search = () => {
   };
 
   const handleSelect = async () => {
-    console.log("handle select");
+    handleChat(user);
+
     const combinedId =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
@@ -97,17 +110,36 @@ const Search = () => {
 
       {err && <p className=" text-gray-600"> User not found</p>}
       {user && (
-        <div onClick={handleSelect} className=" cursor-pointer border-b py-3">
-          <div className=" flex gap-3 items-center">
-            <img
-              className=" w-[40px] h-[40px] rounded-full object-cover"
-              src={user.photoURL}
-              alt=""
-            />
+        <div>
+          <div className="hidden lg:block cursor-pointer border-b py-3">
+            <div onClick={handleSelect} className=" flex gap-3 items-center">
+              <img
+                className=" w-[40px] h-[40px] rounded-full object-cover"
+                src={user.photoURL}
+                alt=""
+              />
 
-            <div>
-              <h3 className=" font-medium capitalize">{user.displayName}</h3>
-              <p className=" text-gray-600 text-sm">Joined April 2023</p>
+              <div>
+                <h3 className=" font-medium capitalize">{user.displayName}</h3>
+                <p className=" text-gray-600 text-sm">Joined April 2023</p>
+              </div>
+            </div>
+          </div>
+          <div className="lg:hidden cursor-pointer border-b py-3">
+            <div
+              onClick={handleChat2(user)}
+              className=" flex gap-3 items-center"
+            >
+              <img
+                className=" w-[40px] h-[40px] rounded-full object-cover"
+                src={user.photoURL}
+                alt=""
+              />
+
+              <div>
+                <h3 className=" font-medium capitalize">{user.displayName}</h3>
+                <p className=" text-gray-600 text-sm">Joined April 2023</p>
+              </div>
             </div>
           </div>
         </div>

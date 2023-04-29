@@ -5,8 +5,9 @@ import { AuthContext } from "../context/AuthContext";
 
 const Profile = () => {
   const { currentUser } = useContext(AuthContext);
+
   return (
-    <div className=" w-[20%] py-10 h-full flex flex-col items-center bg-white ">
+    <div className="py-10 w-full  h-full flex flex-col items-center ">
       <img
         className=" w-[150px] h-[150px] rounded-full object-cover"
         src={currentUser.photoURL}

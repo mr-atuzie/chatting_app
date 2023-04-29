@@ -24,12 +24,12 @@ const Message = ({ message }) => {
       <div
         className={
           message.senderId === currentUser.uid
-            ? "flex gap-3 flex-row-reverse"
+            ? "flex flex-col items-end gap-3 lg:flex-row-reverse"
             : "flex gap-3"
         }
       >
         <img
-          className=" w-[40px] h-[40px] object-cover rounded-full"
+          className=" w-[35px] h-[35px]  lg:w-[40px] lg:h-[40px] object-cover rounded-full"
           src={
             message.senderId === currentUser.uid
               ? currentUser.photoURL
@@ -43,11 +43,11 @@ const Message = ({ message }) => {
             <div
               className={
                 message.senderId === currentUser.uid
-                  ? "bg-pink-700  text-white w-[350px] shadow-lg p-3 rounded-lg"
-                  : "bg-white rounded-lg p-3 text-gray-700  w-[350px] shadow-lg"
+                  ? "bg-pink-700  text-white text-base w-[300px] lg:w-[350px] shadow-lg  p-3 rounded-lg"
+                  : "bg-white rounded-lg p-3 text-base text-gray-700 w-[300px] lg:w-[350px] shadow-lg"
               }
             >
-              {message.text}
+              {message.text.charAt(0).toUpperCase() + message.text.slice(1)}
               <div
                 className={
                   message.senderId === currentUser.uid
@@ -64,8 +64,8 @@ const Message = ({ message }) => {
             <img
               className={
                 message.senderId === currentUser.uid
-                  ? " rounded-lg w-[350px] object-cover my-2 float-right"
-                  : "rounded-lg w-[350px] object-cover my-2"
+                  ? " rounded-lg w-[300px] lg:w-[350px] object-cover my-2 float-right"
+                  : "rounded-lg w-[300px] lg:w-[350px] object-cover my-2"
               }
               src={message.img}
               alt=""

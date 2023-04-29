@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import Chat from "./components/Chat";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -30,6 +31,7 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/chats" element={<Chat />} />
         </Route>
       </Routes>
     </BrowserRouter>

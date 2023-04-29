@@ -65,8 +65,8 @@ const Input = () => {
     setImg(null);
   };
   return (
-    <div className="  p-6 bg-white h-[150px]">
-      <div className="border-2 border-gray-200 rounded-xl h-full flex items-center">
+    <div className=" p-2 lg:p-6  bg-white h-[100px] lg:h-[150px]">
+      <div className="lg:border-2 border-gray-200 rounded-xl h-full flex items-center">
         <input
           className=" px-4 w-[80%] h-full outline-none"
           type="text"
@@ -77,7 +77,7 @@ const Input = () => {
 
         <div className=" h-[42px] w-[2px] bg-gray-300"></div>
 
-        <div className=" flex gap-4 items-center ml-5">
+        <div className=" flex gap-4 items-center ml-3 lg:ml-5">
           <div>
             <input
               onChange={(e) => setImg(e.target.files[0])}
@@ -92,7 +92,7 @@ const Input = () => {
           </div>
           <button
             onClick={handleSend}
-            className=" bg-pink-600 rounded-2xl text-white capitalize font-medium px-6 py-2"
+            className=" bg-pink-600 rounded-2xl text-white capitalize font-medium px-3 lg:px-6 py-2"
           >
             send
           </button>
