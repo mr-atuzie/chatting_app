@@ -12,7 +12,7 @@ const Chat = () => {
   return (
     <div className="chat">
       {/* top bar */}
-      <div className=" shadow-md rounded-md bg-white mb-2  lg:m-3  p-2 lg:p-4">
+      <div className=" rounded-md bg-white mb-2  lg:m-3  p-2 lg:p-4">
         <div className=" flex items-center gap-3">
           <div>
             <Link to={"/"}>

@@ -40,7 +40,7 @@ const Login = () => {
           <h1 className=" font-semibold text-xl lg:text-2xl">ZiltChat</h1>
         </div>
         <div className=" w-full  h-full flex items-center justify-center">
-          <div className=" p-4 w-[65%]">
+          <div className=" p-4 lg:w-[65%]">
             <h1 className=" text-3xl lg:text-5xl font-medium capitalize">
               Welcome back
             </h1>

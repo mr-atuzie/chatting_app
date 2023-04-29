@@ -11,11 +11,11 @@ const Home = () => {
           <Sidebar />
         </div>
 
-        <div className="hidden lg:block  w-full lg:w-[55%] h-full bg-gray-300 ">
+        <div className="hidden lg:block  w-full lg:w-[50%] h-full bg-gray-300 ">
           <Chat />
         </div>
 
-        <div className="hidden  lg:block   w-[20%]  h-full ">
+        <div className="hidden  lg:block   w-[25%]  h-full ">
           <Profile />
         </div>
       </div>
