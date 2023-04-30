@@ -12,7 +12,7 @@ import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
+
 import Search from "./Search";
 import { IoArrowBackOutline } from "react-icons/io5";
 
