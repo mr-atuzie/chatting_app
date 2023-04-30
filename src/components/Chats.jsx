@@ -13,7 +13,8 @@ import {
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
@@ -24,7 +25,8 @@ const Chats = () => {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
-  const handleSelectChat = async (user) => {
+  const handleSelectChat = async (u) => {
+    const user = u[1].userinfo;
     const combinedId =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
@@ -58,13 +60,16 @@ const Chats = () => {
   };
 
   const handleSelect = (u) => {
+    const user = u[1].userinfo;
+    dispatch({ type: "CHANGE_USER", payload: user });
     handleSelectChat(u);
-    dispatch({ type: "CHANGE_USER", payload: u });
   };
 
   const handleSelect2 = (u) => {
+    const user = u[1].userinfo;
+
+    dispatch({ type: "CHANGE_USER", payload: user });
     handleSelectChat(u);
-    dispatch({ type: "CHANGE_USER", payload: u });
     navigate("/chats");
   };
 
@@ -102,26 +107,26 @@ const Chats = () => {
 
   return (
     <div className=" ">
-      <div className=" lg:hidden py-3">
-        <div className=" my-2 flex  gap-2 items-center">
-          <h3 className=" text-gray-700 my-3">Everyone on Zilt</h3>
-          <span className=" text-lg text-gray-600">{allUsers.length + 1}</span>
-        </div>
+      <Link to="/users">
+        <div className=" lg:hidden py-3">
+          <div className=" my-2 flex  gap-2 items-center">
+            <h3 className=" text-gray-700 my-3">Start a conversation</h3>
+          </div>
 
-        <div className=" flex">
-          {allUsers.map((data, index) => {
-            return (
-              <div
-                key={data.uid}
-                className={`${index > 0 && "-ml-3 "} cursor-pointer `}
-              >
-                <div className=" w-full flex gap-3 items-center">
-                  <img
-                    className=" shadow-lg w-[50px] h-[50px] rounded-full object-cover"
-                    src={data.photoURL}
-                    alt=""
-                  />
-                  {/* 
+          <div className=" flex">
+            {allUsers.map((data, index) => {
+              return (
+                <div
+                  key={data.uid}
+                  className={`${index > 0 && "-ml-3 "} cursor-pointer `}
+                >
+                  <div className=" w-full flex gap-3 items-center">
+                    <img
+                      className=" shadow-lg w-[50px] h-[50px] rounded-full object-cover"
+                      src={data.photoURL}
+                      alt=""
+                    />
+                    {/* 
                   <div className=" w-full">
                     <div className=" flex justify-between items-center">
                       <h3 className=" font-medium capitalize text-lg ">
@@ -135,14 +140,15 @@ const Chats = () => {
                       {chat[1].lastMessage?.text}
                     </p>
                   </div> */}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
+      </Link>
 
-      <div className=" my-2 flex  gap-2 items-center">
+      <div className=" mt-6 mb-2 flex  gap-2 items-center">
         <p className=" font-medium text-lg">Recent conversations</p>
       </div>
 
@@ -168,7 +174,9 @@ const Chats = () => {
                         {user[1].userinfo.displayName}
                       </h3>
 
-                      <p className=" text-sm text-green-500">5m</p>
+                      <p className=" text-sm text-green-500">
+                        {moment(user[1].date?.toDate()).calendar()}
+                      </p>
                     </div>
                     <p className="  w-full text-gray-600">
                       {" "}

@@ -8,11 +8,11 @@ import { IoArrowBackOutline } from "react-icons/io5";
 const Chat = () => {
   const { data } = useContext(ChatContext);
 
-  console.log(data);
+  console.log(data.user);
   return (
     <div className="chat">
       {/* top bar */}
-      <div className=" rounded-md bg-white mb-2  lg:m-3  p-2 lg:p-4">
+      <div className="  bg-white  mb-3    p-3 lg:p-4">
         <div className=" flex items-center gap-3">
           <div>
             <Link to={"/"}>
@@ -30,7 +30,7 @@ const Chat = () => {
               {data.user?.displayName}
             </h3>
             <p className=" text-gray-600 text-sm lg:text-base">
-              {data.user?.email}
+              {/* {data.user[1].email} */}
             </p>
           </div>
         </div>

@@ -18,6 +18,8 @@ const Input = () => {
   const [img, setImg] = useState(null);
   const { data } = useContext(ChatContext);
 
+  console.log(data);
+
   const { currentUser } = useContext(AuthContext);
 
   const handleSend = async () => {
@@ -55,7 +57,7 @@ const Input = () => {
       [data.chatId + ".date"]: serverTimestamp(),
     });
 
-    await updateDoc(doc(db, "userChats", data.user.uid), {
+    await updateDoc(doc(db, "userChats", data.user?.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
       },
@@ -65,8 +67,8 @@ const Input = () => {
     setImg(null);
   };
   return (
-    <div className=" p-2 lg:p-6  bg-white h-[100px] lg:h-[150px]">
-      <div className="lg:border-2 border-gray-200 rounded-xl h-full flex items-center">
+    <div className=" p-2 lg:p-6  bg-white h-[100px] lg:h-[120px]">
+      <div className=" h-full flex items-center">
         <input
           className=" px-4 w-[80%] h-full outline-none"
           type="text"

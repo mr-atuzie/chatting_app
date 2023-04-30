@@ -8,7 +8,7 @@ const Profile = () => {
   const { currentUser } = useContext(AuthContext);
 
   return (
-    <div className="py-10 w-full  h-full ">
+    <div className="py-10 w-full  h-full relative ">
       <div className="flex flex-col items-center ">
         <img
           className=" w-[150px] h-[150px] rounded-full object-cover"
@@ -22,15 +22,26 @@ const Profile = () => {
 
         <p className=" text-gray-600 text-sm tracking-wide">
           {" "}
-          11:54pm in Lagos , Nigeria
+          {currentUser.email}
         </p>
       </div>
 
-      <div className=" px-3">
+      <div className="">
+        <div className=" px-3 mt-6  flex  gap-2 items-center">
+          <p className=" font-medium text-lg">Start a conversations</p>
+        </div>
+
         <Allusers />
       </div>
 
-      <button onClick={() => signOut(auth)}>Logout</button>
+      <div className=" flex justify-center items-center">
+        <button
+          className=" bg-pink-600 w-[200px] py-3 rounded-lg text-white absolute bottom-5"
+          onClick={() => signOut(auth)}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { ChatContext } from "../context/ChatContext";
 import { AuthContext } from "../context/AuthContext";
+import moment from "moment/moment";
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
@@ -55,7 +56,7 @@ const Message = ({ message }) => {
                     : " flex gap-2 items-center justify-start text-xs text-gray-500 mt-4 text-right"
                 }
               >
-                Just now
+                {moment(message.date?.toDate()).calendar()}
               </div>
             </div>
           )}

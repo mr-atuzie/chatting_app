@@ -13,8 +13,7 @@ const Navbar = () => {
         <h1 className=" font-semibold text-2xl">ZiltChat</h1>
       </div>
 
-      <div className=" flex items-center gap-2 lg:hidden">
-        <p className=" font-semibold ">{currentUser.displayName}</p>
+      <div className=" flex items-center gap-2 ">
         <img
           className=" w-[40px] h-[40px] rounded-full object-cover"
           src={currentUser.photoURL}

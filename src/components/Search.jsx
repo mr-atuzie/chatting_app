@@ -121,7 +121,7 @@ const Search = () => {
 
               <div>
                 <h3 className=" font-medium capitalize">{user.displayName}</h3>
-                <p className=" text-gray-600 text-sm">Joined April 2023</p>
+                {/* <p className=" text-gray-600 text-sm">Joined April 2023</p> */}
               </div>
             </div>
           </div>

@@ -50,6 +50,7 @@ const Register = () => {
     } catch (error) {
       setErr(true);
       setLoading(false);
+      console.log(error);
     }
   };
   return (

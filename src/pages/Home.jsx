@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className=" w-full h-screen ">
       <div className=" w-full h-full flex">
-        <div className=" w-full lg:w-[25%] shadow-md h-full bg-white overflow-y-scroll  scrollbar-thin scrollbar-thumb-pink-600 scrollbar-track-pink-50  px-2  lg:px-6">
+        <div className=" w-full lg:w-[25%]  h-full bg-white overflow-y-scroll  scrollbar-thin scrollbar-thumb-pink-600 scrollbar-track-pink-50  px-2  lg:px-6">
           <Sidebar />
         </div>
 
