@@ -122,11 +122,14 @@ const Allusers = () => {
 
                   <div className=" w-full">
                     <div className=" flex justify-between items-center">
-                      <h3 className=" font-medium capitalize text-lg ">
+                      <h3 className=" font-medium  lg:text-lg ">
                         {user.displayName}
                       </h3>
                     </div>
-                    <p className="  w-full text-gray-600"> {user.email}</p>
+                    <p className=" text-sm  w-full text-gray-600">
+                      {" "}
+                      {user.email}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -143,13 +146,16 @@ const Allusers = () => {
 
                   <div className=" w-full">
                     <div className=" flex justify-between items-center">
-                      <h3 className=" font-medium capitalize text-lg ">
+                      <h3 className=" font-medium  lg:text-lg ">
                         {user.displayName}
                       </h3>
 
                       {/* <p className=" text-sm text-green-500">5m</p> */}
                     </div>
-                    <p className="   w-full text-gray-600"> {user.email}</p>
+                    <p className=" text-sm   w-full text-gray-600">
+                      {" "}
+                      {user.email}
+                    </p>
                   </div>
                 </div>
               </div>

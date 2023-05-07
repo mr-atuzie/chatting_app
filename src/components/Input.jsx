@@ -13,7 +13,7 @@ import { v4 as uuid } from "uuid";
 import { AuthContext } from "../context/AuthContext";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-const Input = () => {
+const Input = ({ setSending }) => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
   const { data } = useContext(ChatContext);
@@ -22,32 +22,50 @@ const Input = () => {
 
   const { currentUser } = useContext(AuthContext);
 
-  const handleSend = async () => {
-    if (img) {
-      const storageRef = ref(storage, `chats/${uuid()}`);
+  const handleSend = async (e) => {
+    setSending(true);
+    e.preventDefault();
 
-      uploadBytes(storageRef, img).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then(async (url) => {
-          await updateDoc(doc(db, "chats", data.chatId), {
-            messages: arrayUnion({
-              id: uuid(),
-              text,
-              senderId: currentUser.uid,
-              date: Timestamp.now(),
-              img: url,
-            }),
+    try {
+      if (img) {
+        const storageRef = ref(storage, `chats/${uuid()}`);
+
+        uploadBytes(storageRef, img).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then(async (url) => {
+            await updateDoc(doc(db, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: uuid(),
+                text,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img: url,
+              }),
+            });
           });
         });
-      });
-    } else {
-      await updateDoc(doc(db, "chats", data.chatId), {
-        messages: arrayUnion({
-          id: uuid(),
-          text,
-          senderId: currentUser.uid,
-          date: Timestamp.now(),
-        }),
-      });
+
+        setSending(false);
+        setImg(null);
+        setText("");
+      } else {
+        setText("");
+        setImg(null);
+        setSending(true);
+
+        await updateDoc(doc(db, "chats", data.chatId), {
+          messages: arrayUnion({
+            id: uuid(),
+            text,
+            senderId: currentUser.uid,
+            date: Timestamp.now(),
+          }),
+        });
+
+        setSending(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setSending(false);
     }
 
     await updateDoc(doc(db, "userChats", currentUser.uid), {
@@ -63,21 +81,23 @@ const Input = () => {
       },
       [data.chatId + ".date"]: serverTimestamp(),
     });
-    setText("");
-    setImg(null);
   };
   return (
-    <div className=" p-2 lg:p-6  bg-white h-[100px] lg:h-[120px]">
-      <div className=" h-full flex items-center">
+    <div className="  w-full p-2 lg:p-6  chat   ">
+      <form
+        className=" bg-white py-3 lg:py-6 h-full flex rounded-full items-center"
+        onSubmit={handleSend}
+      >
         <input
-          className=" px-4 w-[80%] h-full outline-none"
+          className=" px-4 w-[80%] h-full outline-none text-gray-800"
+          required
           type="text"
-          placeholder="Type something..."
+          placeholder="Message"
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
 
-        <div className=" h-[42px] w-[2px] bg-gray-300"></div>
+        <div className=" h-[42px] w-[2px] bg-gray-700"></div>
 
         <div className=" flex gap-4 items-center ml-3 lg:ml-5">
           <div>
@@ -89,17 +109,17 @@ const Input = () => {
             />
 
             <label htmlFor="file">
-              <BsImages size={30} />
+              <BsImages className=" text-gray-600" size={25} />
             </label>
           </div>
           <button
             onClick={handleSend}
-            className=" bg-pink-600 rounded-2xl text-white capitalize font-medium px-3 lg:px-6 py-2"
+            className="hidden lg:block bg-pink-600 rounded-full text-white capitalize font-medium text-sm lg:text-base px-3 lg:px-6 py-1 lg:py-3"
           >
             send
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

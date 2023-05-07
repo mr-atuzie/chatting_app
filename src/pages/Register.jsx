@@ -56,7 +56,7 @@ const Register = () => {
   return (
     <div className=" flex">
       {/* text div */}
-      <div className=" hidden lg:block w-[50%] bg-pink-100 h-[100vh]">text</div>
+      <div className=" hidden w-[50%] bg-pink-100 h-[100vh] lg:flex px-5 justify-center items-center"></div>
       {/* form div */}
       <div className=" w-full lg:w-[50%] relative h-[100vh]">
         <div className=" flex items-center absolute left-4 top-4 gap-3">
@@ -71,13 +71,19 @@ const Register = () => {
             <h1 className=" text-3xl lg:text-5xl font-medium capitalize">
               register
             </h1>
-
+            <p className=" text-xs text-gray-500 mt-2 lg:text-sm">
+              Fastest growing friendly environment for you to chat with others,
+              whether you're looking for new friends, a casual conversation, or
+              a meaningful connection.You can create your own profile, upload
+              photos, and start chatting instantly with our private messaging
+              system.
+            </p>
+            :
             {err && (
               <p className=" text-sm text-red-600">
                 Something went wrong, please try again
               </p>
             )}
-
             <form className=" mt-6" onSubmit={handleSubmit}>
               <div className=" mb-4">
                 <label
@@ -142,7 +148,6 @@ const Register = () => {
                 </button>
               )}
             </form>
-
             <p className=" mt-5">
               You already have an account ?{" "}
               <Link className=" text-blue-600" to={"/login"}>

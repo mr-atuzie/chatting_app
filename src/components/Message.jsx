@@ -44,16 +44,16 @@ const Message = ({ message }) => {
             <div
               className={
                 message.senderId === currentUser.uid
-                  ? "bg-pink-700  text-white text-base w-[300px] lg:w-[350px] shadow-lg  p-3 rounded-lg"
-                  : "bg-white rounded-lg p-3 text-base text-gray-700 w-[300px] lg:w-[350px] shadow-lg"
+                  ? "bg-pink-700  text-white text-sm lg:text-base w-[200px] lg:w-[350px] shadow-lg  p-3 rounded-lg"
+                  : "bg-white rounded-lg p-3 text-sm lg:text-base text-gray-700 w-[200px] lg:w-[350px] shadow-lg"
               }
             >
               {message.text.charAt(0).toUpperCase() + message.text.slice(1)}
               <div
                 className={
                   message.senderId === currentUser.uid
-                    ? " flex gap-2 items-center justify-end text-white text-xs mt-4 text-right"
-                    : " flex gap-2 items-center justify-start text-xs text-gray-500 mt-4 text-right"
+                    ? " flex gap-2 items-center justify-end text-white text-[10px] mt-2 text-right"
+                    : " flex gap-2 items-center justify-start text-[10px] text-gray-500 mt-2 text-right"
                 }
               >
                 {moment(message.date?.toDate()).calendar()}
@@ -65,8 +65,8 @@ const Message = ({ message }) => {
             <img
               className={
                 message.senderId === currentUser.uid
-                  ? " rounded-lg w-[300px] lg:w-[350px] object-cover my-2 float-right"
-                  : "rounded-lg w-[300px] lg:w-[350px] object-cover my-2"
+                  ? " rounded-lg w-[200px] h-[200px] lg:w-[350px] lg:h-[350px] object-cover object-top my-2 float-right"
+                  : "rounded-lg w-[200px] h-[200px] lg:w-[350px] lg:h-[350px] object-cover object-top my-2"
               }
               src={message.img}
               alt=""

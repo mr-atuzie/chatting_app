@@ -29,7 +29,7 @@ const Login = () => {
   return (
     <div className=" flex">
       {/* text div */}
-      <div className=" hidden lg:block w-[50%] bg-pink-100 h-[100vh]">text</div>
+      <div className=" hidden lg:block w-[50%] bg-pink-100 h-[100vh]"></div>
       {/* form div */}
       <div className=" w-full lg:w-[50%] relative h-[100vh]">
         <div className=" flex items-center absolute left-4 top-4 gap-3">
@@ -44,6 +44,11 @@ const Login = () => {
             <h1 className=" text-3xl lg:text-5xl font-medium capitalize">
               Welcome back
             </h1>
+            <p className=" text-xs text-gray-500 mt-2 lg:text-sm">
+              Fastest growing friendly environment for you to chat with others,
+              whether you're looking for new friends, a casual conversation, or
+              a meaningful connection.
+            </p>
 
             {err && (
               <p className=" text-sm text-red-600">

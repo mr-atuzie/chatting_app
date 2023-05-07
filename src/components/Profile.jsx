@@ -9,6 +9,9 @@ const Profile = () => {
 
   return (
     <div className="py-10 w-full  h-full relative ">
+      <h2 className=" text-gray-500 text-center font-semibold mb-12">
+        Your Profile
+      </h2>
       <div className="flex flex-col items-center ">
         <img
           className=" w-[150px] h-[150px] rounded-full object-cover"

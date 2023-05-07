@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import { ChatContext } from "../context/ChatContext";
@@ -7,12 +7,13 @@ import { IoArrowBackOutline } from "react-icons/io5";
 
 const Chat = () => {
   const { data } = useContext(ChatContext);
+  const [sending, setSending] = useState(false);
 
   console.log(data.user);
   return (
-    <div className="chat">
+    <div className="chat relative">
       {/* top bar */}
-      <div className="  bg-white  mb-3    p-3 lg:p-4">
+      <div className="  bg-white  mb-3 w-full z-40 sticky top-0   p-3 lg:p-4">
         <div className=" flex items-center gap-3">
           <div>
             <Link to={"/"}>
@@ -36,9 +37,9 @@ const Chat = () => {
         </div>
       </div>
       {/* chat box */}
-      <Messages />
+      <Messages sending={sending} />
       {/*message input  */}
-      <Input />
+      <Input setSending={setSending} />
     </div>
   );
 };

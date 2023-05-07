@@ -14,7 +14,7 @@ import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { Link, useNavigate } from "react-router-dom";
-import moment from "moment";
+// import moment from "moment";
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
@@ -149,7 +149,7 @@ const Chats = () => {
       </Link>
 
       <div className=" mt-6 mb-2 flex  gap-2 items-center">
-        <p className=" font-medium text-lg">Recent conversations</p>
+        <p className=" font-medium  text-gray-600 lg:text-lg">Recent chats</p>
       </div>
 
       {Object.entries(chats)
@@ -170,13 +170,13 @@ const Chats = () => {
 
                   <div className=" w-full">
                     <div className=" flex justify-between items-center">
-                      <h3 className=" font-medium capitalize text-lg ">
+                      <h3 className=" font-medium text-lg ">
                         {user[1].userinfo.displayName}
                       </h3>
 
-                      <p className=" text-sm text-green-500">
+                      {/* <p className=" text-sm text-green-500">
                         {moment(user[1].date?.toDate()).calendar()}
-                      </p>
+                      </p> */}
                     </div>
                     <p className="  w-full text-gray-600">
                       {" "}
@@ -198,13 +198,13 @@ const Chats = () => {
 
                   <div className=" w-full">
                     <div className=" flex justify-between items-center">
-                      <h3 className=" font-medium capitalize text-lg ">
+                      <h3 className=" font-medium  ">
                         {user[1].userinfo.displayName}
                       </h3>
 
                       {/* <p className=" text-sm text-green-500">5m</p> */}
                     </div>
-                    <p className="   w-full text-gray-600">
+                    <p className=" text-sm   w-full text-gray-600">
                       {" "}
                       {user[1].lastMessage?.text}
                     </p>
